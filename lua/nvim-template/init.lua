@@ -68,9 +68,11 @@ M.args_analyzer = function(args)
   end
 
   -- Target
-  if args[2]:sub(-1) == "/" or args[2]:sub(-1) == "\\" then
-    vim.notify "Target path error"
-    return false
+  if args[2] ~= nil then
+    if args[2]:sub(-1) == "/" or args[2]:sub(-1) == "\\" then
+      vim.notify "Target path error"
+      return false
+    end
   end
 
   -- Search template
