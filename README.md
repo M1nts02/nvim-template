@@ -28,6 +28,33 @@ require("lazy").setup({
 }
 ```
 
+## Example for register file
+
+```json
+{
+  "CMakeLists": {
+    "target": "CMakeLists.txt",
+    "template": "CMakeLists.txt"
+  },
+  "launch(lldb)": {
+    "target": ".vscode/launch.json",
+    "template": "launch_lldb.json"
+  },
+  "task(cmake)": {
+    "target": ".vscode/task.json",
+    "template": "task_cmake.json"
+  },
+  "stylua": {
+    "target": "stylua.toml",
+    "template": "stylua.toml"
+  },
+  "rustfmt": {
+    "target": "rustfmt.toml",
+    "template": "rustfmt.toml"
+  }
+}
+```
+
 ## Usage
 
 ```vim
