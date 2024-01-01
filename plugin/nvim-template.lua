@@ -1,10 +1,16 @@
 local templ = require "nvim-template"
 
-vim.api.nvim_create_user_command("Template", function(a)
+vim.api.nvim_create_user_command("Templ", function(opt)
   -- Args analyzer
-  local args = vim.split(a.args, " ")
-  local result = templ.args_analyzer(args)
+  local args = {}
+  for _, v in ipairs(vim.split(opt.args, " ")) do
+    if v ~= "" and v ~= " " then
+      table.insert(args, v)
+    end
+  end
 
+  -- Args analyzer
+  local result = templ.args_analyzer(args)
   -- Args error
   if result == false then
     return
@@ -17,9 +23,18 @@ vim.api.nvim_create_user_command("Template", function(a)
   vim.cmd("e " .. target)
 end, {
   desc = "Template",
-  nargs = "*",
-  complete = function(_, line)
-    local args = vim.split(line, " ")
-    templ.complete(args[1])
+  nargs = "?",
+  complete = function(arg, line, pos)
+    local args = vim.split(line:sub(1, pos), " ")
+
+    for i, v in ipairs(args) do
+      if v == "" then
+        table.remove(args, i)
+      end
+    end
+
+    if #args == 1 or (#args == 2 and arg ~= " " and arg ~= "") then
+      return templ.complete(arg)
+    end
   end,
 })
