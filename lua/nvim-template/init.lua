@@ -102,8 +102,8 @@ end
 -- Setup
 M.setup = function(opts)
   vim.validate { option = { opts, "t" } }
-  M.templ_dir = opts.temp_dir or path_join(vim.fn.stdpath "config", "template")
-  M.templ_register_file = opts.temp_register_file or path_join(vim.fn.stdpath "config", "template.json")
+  M.templ_dir = opts.templ_dir or path_join(vim.fn.stdpath "config", "template")
+  M.templ_register_file = opts.templ_register_file or path_join(vim.fn.stdpath "config", "template.json")
 
   templ_init()
 end
