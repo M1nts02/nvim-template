@@ -1,1 +1,36 @@
 # nvim-template
+
+A neovim plugin for template
+
+## Install
+
+```lua
+-- lazy.nvim
+require("lazy").setup({
+  {
+    "M1nts02/nvim-template",
+    cmd = "Templ",
+    opts = {
+      templ_dir = path_join(vim.fn.stdpath "config", "template"),
+      templ_register_file = path_join(vim.fn.stdpath "config", "template.json"),
+    },
+  },
+})
+```
+
+## Configuration
+
+```lua
+-- default config
+{
+  templ_dir = vim.fn.stdpath "config" .. "/" .. "template"),
+  templ_register_file = vim.fn.stdpath "config" .. "/" .. "template.json"),
+}
+```
+
+## Usage
+
+```vim
+:Templ <template>
+:Templ <template> <target>
+```
