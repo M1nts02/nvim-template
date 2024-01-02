@@ -51,3 +51,52 @@ end, {
     end
   end,
 })
+
+-- TODO: Create template
+--vim.api.nvim_create_user_command("TemplCreate", function(opt)
+--  -- Args analyzer
+--  local args = {}
+--  for _, v in ipairs(vim.split(opt.args, " ")) do
+--    if v ~= "" and v ~= " " then
+--      table.insert(args, v)
+--    end
+--  end
+--
+--  -- Args number
+--  if #args ~= 1 then
+--    vim.notify "Args error"
+--    return
+--  end
+--
+--  -- Search template
+--  if templ.templ_register[args[1]] ~= nil then
+--    vim.notify "Template exist"
+--    return
+--  end
+--end, {
+--  desc = "Create template",
+--  nargs = "*",
+--})
+
+vim.api.nvim_create_user_command("TemplDel", function(opt)
+  local args = {}
+  for _, v in ipairs(vim.split(opt.args, " ")) do
+    if v ~= "" and v ~= " " then
+      table.insert(args, v)
+    end
+  end
+
+  -- Args number
+  if #args < 1 or args == {} or args == nil then
+    vim.notify "Args error"
+    return
+  end
+
+  templ.del_templ(args)
+end, {
+  desc = "Delete template",
+  nargs = "*",
+  complete = function(arg)
+    return templ.complete(arg)
+  end,
+})

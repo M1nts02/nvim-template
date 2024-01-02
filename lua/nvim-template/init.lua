@@ -59,6 +59,32 @@ M.create_target = function(templ, target)
   return target
 end
 
+-- Delete template
+M.del_templ = function(args)
+  for _, templ in ipairs(args) do
+    if M.templ_register[templ] == nil then
+      vim.notify("Unknown template " .. templ)
+      goto continue
+    end
+
+    local templ_path = utils.path_join(M.templ_dir, M.templ_register[templ].template)
+    local result = os.remove(templ_path)
+
+    if result then
+      M.templ_register[templ] = nil
+      local data = vim.json.encode(M.templ_register)
+      local register = io.open(M.templ_register_file, "w")
+      register:write(data)
+      register:close()
+      vim.notify(templ .. " is Deleted")
+    else
+      vim.notify("False:Delete " .. templ)
+    end
+
+    ::continue::
+  end
+end
+
 -- Complete
 M.complete = function(line)
   local templ_list = {}

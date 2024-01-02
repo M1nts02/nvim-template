@@ -9,7 +9,7 @@ A neovim plugin for template
 require("lazy").setup({
   {
     "M1nts02/nvim-template",
-    cmd = "Templ",
+    cmd = {"Templ", "TemplDel"},
     opts = {
       templ_dir = path_join(vim.fn.stdpath "config", "template"),
       templ_register_file = path_join(vim.fn.stdpath "config", "template.json"),
@@ -48,4 +48,5 @@ require("lazy").setup({
 ```vim
 :Templ <template>
 :Templ <template> <target>
+:TemplDel <template1> <template2> ...
 ```
