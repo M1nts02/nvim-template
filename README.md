@@ -9,10 +9,10 @@ A neovim plugin for template
 require("lazy").setup({
   {
     "M1nts02/nvim-template",
-    cmd = {"Templ", "TemplDel"},
+    cmd = {"Templ", "TemplAdd", "TemplDel"},
     opts = {
-      templ_dir = path_join(vim.fn.stdpath "config", "template"),
-      templ_register_file = path_join(vim.fn.stdpath "config", "template.json"),
+      templ_dir = vim.fn.stdpath("config") .. "/" .. "template",
+      templ_register_file = vim.fn.stdpath("config") .. "/" .. "template.json",
     },
   },
 })
@@ -23,8 +23,8 @@ require("lazy").setup({
 ```lua
 -- default config
 {
-  templ_dir = vim.fn.stdpath "config" .. "/" .. "template"),
-  templ_register_file = vim.fn.stdpath "config" .. "/" .. "template.json"),
+  templ_dir = vim.fn.stdpath("config") .. "/" .. "template"),
+  templ_register_file = vim.fn.stdpath("config") .. "/" .. "template.json"),
 }
 ```
 
@@ -48,5 +48,6 @@ require("lazy").setup({
 ```vim
 :Templ <template>
 :Templ <template> <target>
+:TemplAdd <template>
 :TemplDel <template1> <template2> ...
 ```
