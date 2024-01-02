@@ -1,0 +1,70 @@
+*nvim-template.txt*
+
+==============================================================================
+CONTENTS                                              *nvim-template_contents*
+
+nvim-template                                    |nvim-template_nvim-template|
+Install                                                |nvim-template_install|
+Options                                                |nvim-template_options|
+Commands                                              |nvim-template_commands|
+
+==============================================================================
+nvim-template                                    *nvim-template_nvim-template*
+
+A neovim plugin for template.
+
+==============================================================================
+Install                                                *nvim-template_install*
+
+>lua
+  -- lazy.nvim
+  require("lazy").setup({
+    {
+      "M1nts02/nvim-template",
+      cmd = {"Templ", "TemplAdd", "TemplDel"},
+      opts = {
+        templ_dir = vim.fn.stdpath("config") .. "/" .. "template",
+        templ_register_file = vim.fn.stdpath("config") .. "/" .. "template.json",
+      },
+    },
+  })
+<
+
+==============================================================================
+Options                                                *nvim-template_options*
+
+>lua
+  -- default config
+  {
+    templ_dir = vim.fn.stdpath("config") .. "/" .. "template"),
+    templ_register_file = vim.fn.stdpath("config") .. "/" .. "template.json"),
+  }
+<
+
+==============================================================================
+Commands                                              *nvim-template_commands*
+
+                                                                      *:Templ*
+:Templ                 Create target file use template.
+
+>vim
+  :Templ <template>
+  :Templ <template> <target>
+<
+
+                                                                   *:TemplAdd*
+:TemplAdd              Add template.
+
+>vim
+  :TemplAdd <template>
+<
+
+                                                                   *:TemplDel*
+:TemplDel              Delete template.
+
+>vim
+  :TemplDel <template1> <template2> ...
+<
+
+==============================================================================
+vim:tw=78:ts=8:noet:ft=help:norl:
