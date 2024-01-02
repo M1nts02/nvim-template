@@ -59,6 +59,39 @@ M.create_target = function(templ, target)
   return target
 end
 
+-- Add template
+M.add_templ = function(templ)
+  local templ_name = vim.fn.input "Template File:"
+  local templ_path = path_join(M.templ_dir, templ_name)
+
+  -- if template file exist
+  local file = io.open(templ_path, "r")
+  if file ~= nil then
+    vim.notify "Template file exist"
+    file:close()
+    return
+  end
+
+  local target_path = vim.fn.input "Target File:"
+
+  vim.api.nvim_create_autocmd("BufWritePost", {
+    pattern = { templ_path },
+    once = true,
+    callback = function()
+      M.templ_register[templ] = {
+        target = target_path,
+        template = templ_name,
+      }
+      local data = vim.json.encode(M.templ_register)
+      local register = io.open(M.templ_register_file, "w")
+      register:write(data)
+      register:close()
+    end,
+  })
+
+  vim.cmd("e " .. templ_path)
+end
+
 -- Delete template
 M.del_templ = function(args)
   for _, templ in ipairs(args) do
