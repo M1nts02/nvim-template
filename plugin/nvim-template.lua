@@ -9,10 +9,23 @@ vim.api.nvim_create_user_command("Templ", function(opt)
     end
   end
 
-  -- Args analyzer
-  local result = templ.args_analyzer(args)
-  -- Args error
-  if result == false then
+  -- Args number
+  if #args > 2 or #args < 1 or args[1] == "" then
+    vim.notify "Args error"
+    return
+  end
+
+  -- Target path
+  if args[2] ~= nil then
+    if args[2]:sub(-1) == "/" or args[2]:sub(-1) == "\\" then
+      vim.notify "Target path error"
+      return false
+    end
+  end
+
+  -- Search template
+  if templ.templ_register[args[1]] == nil then
+    vim.notify "Unknown template"
     return
   end
 

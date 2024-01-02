@@ -59,31 +59,6 @@ M.create_target = function(templ, target)
   return target
 end
 
--- Args analyzer
-M.args_analyzer = function(args)
-  -- Args number
-  if #args > 2 or #args < 1 or args[1] == "" then
-    vim.notify "Args error"
-    return false
-  end
-
-  -- Target
-  if args[2] ~= nil then
-    if args[2]:sub(-1) == "/" or args[2]:sub(-1) == "\\" then
-      vim.notify "Target path error"
-      return false
-    end
-  end
-
-  -- Search template
-  if M.templ_register[args[1]] == nil then
-    vim.notify "Unknown template"
-    return false
-  end
-
-  return true
-end
-
 -- Complete
 M.complete = function(line)
   local templ_list = {}
