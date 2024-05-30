@@ -170,7 +170,7 @@ M.setup = function(opts)
   M.templ_register_file = opts.templ_register_file or path_join(vim.fn.stdpath "config", "template.json")
 
   author = opts.author or author
-  email = opts.author or email
+  email = opts.email or email
 
   templ_init()
 end
