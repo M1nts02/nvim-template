@@ -54,16 +54,15 @@ M.create_target = function(templ, target)
   local data = old_file:read "a"
   old_file:close()
 
-  -- [\${_].*[_}]
   data = string.gsub(data, "${_AUTHOR_}", author)
   data = string.gsub(data, "${_EMAIL_}", email)
 
   --local p, _ = string.find(data, "${_CURSOR_}")
   --data = string.gsub(data, "${_CURSOR_}", "")
 
-  -- ${_DATE()_}
-  data, _ = string.gsub(data, "[\\${_DATE(].*[)_}]", function(s)
-    return os.date(string.sub(s, 9, -4))
+  -- DATE: ${_DATE()_}
+  data, _ = string.gsub(data, "${_DATE(.-)_}", function(s)
+    return os.date(s:sub(2, -2))
   end)
 
   -- Create target
