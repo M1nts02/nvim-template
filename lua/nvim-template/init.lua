@@ -6,6 +6,9 @@ M.templ_register = {}
 M.templ_dir = ""
 M.templ_register_file = ""
 
+local author = ""
+local email = ""
+
 -- Init
 local templ_init = function()
   local file = io.open(M.templ_register_file, "r")
@@ -50,6 +53,18 @@ M.create_target = function(templ, target)
   assert(old_file ~= nil, errorString)
   local data = old_file:read "a"
   old_file:close()
+
+  -- [\${_].*[_}]
+  data = string.gsub(data, "${_AUTHOR_}", author)
+  data = string.gsub(data, "${_EMAIL_}", email)
+
+  --local p, _ = string.find(data, "${_CURSOR_}")
+  --data = string.gsub(data, "${_CURSOR_}", "")
+
+  -- ${_DATE()_}
+  data, _ = string.gsub(data, "[\\${_DATE(].*[)_}]", function(s)
+    return os.date(string.sub(s, 9, -4))
+  end)
 
   -- Create target
   local new_file = io.open(target, "wb")
@@ -118,6 +133,21 @@ M.del_templ = function(args)
   end
 end
 
+-- Edit template
+-- M.edit_templ = function(args)
+--   for _, templ in ipairs(args) do
+--     if M.templ_register[templ] == nil then
+--       vim.notify("Unknown template " .. templ)
+--       goto continue
+--     end
+--
+--     local templ_path = utils.path_join(M.templ_dir, M.templ_register[templ].template)
+--
+--     vim.cmd("e " .. templ_path)
+--     ::continue::
+--   end
+-- end
+
 -- Complete
 M.complete = function(line)
   local templ_list = {}
@@ -138,6 +168,9 @@ M.setup = function(opts)
   vim.validate { option = { opts, "t" } }
   M.templ_dir = opts.templ_dir or path_join(vim.fn.stdpath "config", "template")
   M.templ_register_file = opts.templ_register_file or path_join(vim.fn.stdpath "config", "template.json")
+
+  author = opts.author or author
+  email = opts.author or email
 
   templ_init()
 end
