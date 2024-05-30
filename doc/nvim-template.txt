@@ -25,6 +25,8 @@ Install                                                *nvim-template_install*
       opts = {
         templ_dir = vim.fn.stdpath("config") .. "/" .. "template",
         templ_register_file = vim.fn.stdpath("config") .. "/" .. "template.json",
+        author = "xxxx",
+        author email = "xxxxxx@xxx.com",
       },
     },
   })
@@ -38,6 +40,8 @@ Options                                                *nvim-template_options*
   {
     templ_dir = vim.fn.stdpath("config") .. "/" .. "template"),
     templ_register_file = vim.fn.stdpath("config") .. "/" .. "template.json"),
+    author = "xxxx",
+    email = "xxxxxx@xxx.com",
   }
 <
 
