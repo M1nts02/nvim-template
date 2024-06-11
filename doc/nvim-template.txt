@@ -23,11 +23,7 @@ Install                                                *nvim-template_install*
       "M1nts02/nvim-template",
       cmd = {"Templ", "TemplAdd", "TemplDel"},
       opts = {
-        templ_dir = vim.fn.stdpath("config") .. "/" .. "template",
-        templ_register_file = vim.fn.stdpath("config") .. "/" .. "template.json",
-        author = "xxxx",
-        email = "xxxxxx@xxx.com",
-        git_info = false, -- get author and email from git config
+        git_info = true,
       },
     },
   })
@@ -43,6 +39,7 @@ Options                                                *nvim-template_options*
     templ_register_file = vim.fn.stdpath("config") .. "/" .. "template.json"),
     author = "xxxx",
     email = "xxxxxx@xxx.com",
+    git_info = false, -- get author and email from git config
   }
 <
 
