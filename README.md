@@ -11,8 +11,6 @@ require("lazy").setup({
     "M1nts02/nvim-template",
     cmd = {"Templ", "TemplAdd", "TemplDel"},
     opts = {
-      templ_dir = vim.fn.stdpath("config") .. "/" .. "template",
-      templ_register_file = vim.fn.stdpath("config") .. "/" .. "template.json",
       git_info = true,
     },
   },
