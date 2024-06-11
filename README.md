@@ -13,8 +13,7 @@ require("lazy").setup({
     opts = {
       templ_dir = vim.fn.stdpath("config") .. "/" .. "template",
       templ_register_file = vim.fn.stdpath("config") .. "/" .. "template.json",
-      author = "xxxx",
-      email = "xxxxxx@xxx.com",
+      git_info = true,
     },
   },
 })
@@ -29,6 +28,7 @@ require("lazy").setup({
   templ_register_file = vim.fn.stdpath("config") .. "/" .. "template.json"),
   author = "xxxx",
   email = "xxxxxx@xxx.com",
+  git_info = false, -- get author and email from git config
 }
 ```
 
@@ -43,15 +43,15 @@ require("lazy").setup({
   "stylua": {
     "target": "stylua.toml",
     "template": "stylua.toml"
-  },
+  }
 }
 ```
 
 ## Example for template file
 
-* `${_AUTHOR_}`
-* `${_EMAIL_}`
-* `${_DATE()_}`: use `os.date()`
+- `${_AUTHOR_}`
+- `${_EMAIL_}`
+- `${_DATE()_}`: use `os.date()`
 
 ```lua
 -- AUTHOR: ${_AUTHOR_}
