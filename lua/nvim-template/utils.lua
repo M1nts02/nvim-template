@@ -6,7 +6,7 @@ M.is_linux = os_name:find "Linux" ~= nil
 M.is_windows = os_name:find "Windows" ~= nil
 
 -- connect path
-M.path_join = function(...)
+function M.path_join(...)
   local sep = M.is_windows and "\\" or "/"
   return table.concat({ ... }, sep)
 end

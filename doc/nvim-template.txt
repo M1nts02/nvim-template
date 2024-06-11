@@ -26,7 +26,8 @@ Install                                                *nvim-template_install*
         templ_dir = vim.fn.stdpath("config") .. "/" .. "template",
         templ_register_file = vim.fn.stdpath("config") .. "/" .. "template.json",
         author = "xxxx",
-        author email = "xxxxxx@xxx.com",
+        email = "xxxxxx@xxx.com",
+        git_info = false, -- get author and email from git config
       },
     },
   })

@@ -8,9 +8,10 @@ M.templ_register_file = ""
 
 local author = ""
 local email = ""
+local git_info = false
 
 -- Init
-local templ_init = function()
+local function templ_init()
   local file = io.open(M.templ_register_file, "r")
 
   -- Create register file
@@ -30,8 +31,19 @@ local templ_init = function()
   end
 end
 
+local function get_git_info()
+  local au = io.popen("git config --get user.name"):read "l"
+  local em = io.popen("git config --get user.email"):read "l"
+  if au == nil or au == "" or em == "" or em == nil then
+    au = author
+    em = email
+    vim.notify "Can't get git information"
+  end
+  return au, em
+end
+
 -- Create target
-M.create_target = function(templ, target)
+function M.create_target(templ, target)
   local templ_path = utils.path_join(M.templ_dir, M.templ_register[templ].template)
   target = target ~= nil and target or M.templ_register[templ].target
 
@@ -54,8 +66,14 @@ M.create_target = function(templ, target)
   local data = old_file:read "a"
   old_file:close()
 
-  data = string.gsub(data, "${_AUTHOR_}", author)
-  data = string.gsub(data, "${_EMAIL_}", email)
+  local au = author
+  local em = email
+  if git_info == true then
+    au, em = get_git_info()
+  end
+
+  data = string.gsub(data, "${_AUTHOR_}", au)
+  data = string.gsub(data, "${_EMAIL_}", em)
 
   --local p, _ = string.find(data, "${_CURSOR_}")
   --data = string.gsub(data, "${_CURSOR_}", "")
@@ -74,7 +92,7 @@ M.create_target = function(templ, target)
 end
 
 -- Add template
-M.add_templ = function(templ)
+function M.add_templ(templ)
   local templ_name = vim.fn.input "Template File:"
   local templ_path = path_join(M.templ_dir, templ_name)
 
@@ -107,7 +125,7 @@ M.add_templ = function(templ)
 end
 
 -- Delete template
-M.del_templ = function(args)
+function M.del_templ(args)
   for _, templ in ipairs(args) do
     if M.templ_register[templ] == nil then
       vim.notify("Unknown template " .. templ)
@@ -133,7 +151,7 @@ M.del_templ = function(args)
 end
 
 -- Edit template
--- M.edit_templ = function(args)
+-- function M.edit_templ (args)
 --   for _, templ in ipairs(args) do
 --     if M.templ_register[templ] == nil then
 --       vim.notify("Unknown template " .. templ)
@@ -148,7 +166,7 @@ end
 -- end
 
 -- Complete
-M.complete = function(line)
+function M.complete(line)
   local templ_list = {}
 
   -- Add template names for completion
@@ -163,13 +181,14 @@ M.complete = function(line)
 end
 
 -- Setup
-M.setup = function(opts)
+function M.setup(opts)
   vim.validate { option = { opts, "t" } }
   M.templ_dir = opts.templ_dir or path_join(vim.fn.stdpath "config", "template")
   M.templ_register_file = opts.templ_register_file or path_join(vim.fn.stdpath "config", "template.json")
 
   author = opts.author or author
   email = opts.email or email
+  git_info = opts.git_info or git_info
 
   templ_init()
 end
