@@ -106,35 +106,41 @@ end, {
 })
 
 -- Edit template
--- vim.api.nvim_create_user_command("TemplEdit", function(opt)
---   local args = {}
---   for _, v in ipairs(vim.split(opt.args, " ")) do
---     if v ~= "" and v ~= " " then
---       table.insert(args, v)
---     end
---   end
---
---   -- Args number
---   if #args > 2 or #args < 1 or args[1] == "" then
---     vim.notify "Args error"
---     return
---   end
---
---   templ.edit_templ(args)
--- end, {
---   desc = "Edit template",
---   nargs = "?",
---   complete = function(arg, line, pos)
---     local args = vim.split(line:sub(1, pos), " ")
---
---     for i, v in ipairs(args) do
---       if v == "" then
---         table.remove(args, i)
---       end
---     end
---
---     if #args == 1 or (#args == 2 and arg ~= " " and arg ~= "") then
---       return templ.complete(arg)
---     end
---   end,
--- })
+vim.api.nvim_create_user_command("TemplEdit", function(opt)
+  local args = {}
+  for _, v in ipairs(vim.split(opt.args, " ")) do
+    if v ~= "" and v ~= " " then
+      table.insert(args, v)
+    end
+  end
+
+  -- Args number
+  if #args ~= 1 or args == {} or args == nil then
+    vim.notify "Args error"
+    return
+  end
+
+  -- Search template
+  if templ.templ_register[args[1]] == nil then
+    vim.notify "Unknown template"
+    return
+  end
+
+  templ.edit_templ(args[1])
+end, {
+  desc = "Edit template",
+  nargs = "?",
+  complete = function(arg, line, pos)
+    local args = vim.split(line:sub(1, pos), " ")
+
+    for i, v in ipairs(args) do
+      if v == "" then
+        table.remove(args, i)
+      end
+    end
+
+    if #args == 1 or (#args == 2 and arg ~= " " and arg ~= "") then
+      return templ.complete(arg)
+    end
+  end,
+})

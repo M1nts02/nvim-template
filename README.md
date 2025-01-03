@@ -70,4 +70,5 @@ add_files "src/*.c"
 :Templ <template> <target>
 :TemplAdd <template>
 :TemplDel <template1> <template2> ...
+:TemplEdit <template>
 ```

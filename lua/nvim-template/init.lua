@@ -151,19 +151,10 @@ function M.del_templ(args)
 end
 
 -- Edit template
--- function M.edit_templ (args)
---   for _, templ in ipairs(args) do
---     if M.templ_register[templ] == nil then
---       vim.notify("Unknown template " .. templ)
---       goto continue
---     end
---
---     local templ_path = utils.path_join(M.templ_dir, M.templ_register[templ].template)
---
---     vim.cmd("e " .. templ_path)
---     ::continue::
---   end
--- end
+function M.edit_templ(templ)
+  local templ_path = utils.path_join(M.templ_dir, M.templ_register[templ].template)
+  vim.cmd("e " .. templ_path)
+end
 
 -- Complete
 function M.complete(line)
