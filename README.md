@@ -9,7 +9,7 @@ A neovim plugin for template
 require("lazy").setup({
   {
     "M1nts02/nvim-template",
-    cmd = {"Templ", "TemplAdd", "TemplDel"},
+    cmd = { "Templ", "TemplAdd", "TemplDel", "TemplEdit" },
     opts = {
       git_info = true,
     },
